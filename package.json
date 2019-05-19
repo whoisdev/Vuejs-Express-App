@@ -6,25 +6,18 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dev1203/Vuejs-Express-App.git"
+  },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "axios": "^0.18.0",
-    "babel": "^6.23.0",
-    "babel-cli": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-stage-2": "^6.24.1",
-    "babel-register": "^6.26.0",
-    "body-parser": "^1.19.0",
-    "chalk": "^2.4.2",
-    "ejs": "^2.6.1",
-    "express": "^4.16.4",
-    "express-ejs-layouts": "^2.5.0",
-    "mysql": "^2.17.1",
-    "path": "^0.12.7",
-    "vue-router": "^3.0.6"
+  "bugs": {
+    "url": "https://github.com/dev1203/Vuejs-Express-App/issues"
   },
-  "devDependencies": {
-    "nodemon": "^1.19.0"
+  "homepage": "https://github.com/dev1203/Vuejs-Express-App#readme",
+  "dependencies": {
+    "express": "^4.17.0",
+    "vue": "^2.6.10"
   }
 }

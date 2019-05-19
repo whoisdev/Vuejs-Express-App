@@ -1,0 +1,38 @@
+body,html{
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw; 
+    font-family: 'Poppins', sans-serif;
+}
+.centre--align{
+    text-align: center;
+}
+.text--white{
+    color: white !important;
+}
+.text--bold{
+    font-family: 'Montserrat', sans-serif !important;
+}
+.float--right{
+    position: absolute !important;
+    right: 10px !important;
+}
+.btn--purple{
+    background: #800080;
+}
+.btn--pink{
+    background: #f06595 !important;
+}
+.margin-top--md{
+    margin-top:4rem;
+}
+.margin-top--lr{
+    margin-top:6rem;
+}
+.transparent {
+    background: transparent !important;
+}
+.container{
+    padding: 1rem 3rem;
+}

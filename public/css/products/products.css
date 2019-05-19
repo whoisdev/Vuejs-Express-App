@@ -1,0 +1,10 @@
+.product__search{
+    margin-top: 2rem; 
+    margin-bottom: 2rem;
+}
+
+.navbar{
+    background : #f06595 !important;
+    font-family: 'Montserrat', sans-serif !important;
+    height: 4rem;    
+}

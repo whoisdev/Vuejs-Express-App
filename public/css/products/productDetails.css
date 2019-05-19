@@ -1,0 +1,11 @@
+.navbar{
+    background : #f06595 !important;
+    font-family: 'Montserrat', sans-serif !important;
+    height: 4rem;    
+}
+.details__slideshow{
+    max-height: 80vh;
+}
+.details__btngrp>a{
+    margin-top: 30px;
+}

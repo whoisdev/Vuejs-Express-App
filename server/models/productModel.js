@@ -5,13 +5,18 @@ module.exports = {
     addNewProduct : function 
     (
         { 
-            productTitle,
-            productPrice,
-            productDescription,
-            productSize
+            productTitle, 
+            productPrice, 
+            productDescription, 
+            productSize,
+            productFeatured,
+            productVisible
         }
     ){
         return new Promise((resolve,reject)=>{
+            let isFeatured, isHidden = 0;
+            isFeatured = productFeatured ?  1 : 0;
+            isHidden = productVisible ? 0 : 1;
             connect()
             .then((connection)=>{
                 let query = `INSERT INTO products 
@@ -19,21 +24,25 @@ module.exports = {
                     productTitle,
                     productPrice,
                     productDescription,
-                    productSize
+                    productSize,
+                    isFeatured,
+                    isHidden
                 ) VALUES 
                 (
                     '${productTitle}',
                     '${productPrice}',
                     '${productDescription}',
-                    '${productSize}'
+                    '${productSize}',
+                    '${isFeatured}',
+                    ${isHidden}
                 );`
-                connection.query(query,function(error, results, fields){
+                connection.query(query,function(error, result, fields){
                     if(error) {
                         reject(error);
                     }
                     else {
                         connection.end();
-                        resolve();
+                        resolve(result.insertId);
                     }
                 });
             })
@@ -41,7 +50,7 @@ module.exports = {
     },
     fetchAllProducts: function() {
         return new Promise((resolve,reject)=>{
-            let query = `SELECT * FROM products;`;
+            let query = `SELECT * FROM products WHERE isHidden = 0;`;
             connect()
             .then((connection)=>{
                 connection.query(query, function(error, results, fields){
@@ -68,5 +77,21 @@ module.exports = {
                 })
             })
         });
+    },
+    fetchProductsByKeywords : (keyword)=>{
+        return new Promise((resolve,reject)=>{
+            let query = `
+                SELECT * FROM products 
+                WHERE productTitle LIKE '%${keyword}%' 
+                OR productDescription LIKE '%${keyword}%';`;
+                connect()
+                .then((connection)=>{
+                    console.log(query);
+                    connection.query(query,(error,results)=>{
+                        if (error) reject(error);
+                        else resolve(results);
+                    })
+                })
+        })
     }
 }

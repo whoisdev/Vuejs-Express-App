@@ -12,9 +12,10 @@ module.exports = function connect(){
             if(err){
                 console.log(chalk.red('error connecting: ' + err.stack));
                 reject(err);
+            } else{
+                console.log(chalk.green('Connected!'));
+                return resolve(connection)
             }
-            console.log(chalk.green('Connected!'));
-            return resolve(connection)
         });
         
     })

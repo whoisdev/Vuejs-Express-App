@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import App from './App.vue'
+import axios from 'axios'
 
+Vue.prototype.$http = axios
 import './styles/quasar.styl'
 import 'quasar/dist/quasar.ie.polyfills'
 import '@quasar/extras/roboto-font/roboto-font.css'
@@ -23,7 +25,16 @@ import {
   QItem,
   QItemSection,
   QItemLabel,
+  QSeparator,
+  QChip,
+  QInput,
+  ClosePopup,
+  QForm,
+  QSelect,
+  QCard,
+  QCardSection
 } from 'quasar'
+import { strict } from 'assert';
 
 Vue.use(Quasar, {
   config: {},
@@ -41,8 +52,16 @@ Vue.use(Quasar, {
     QItem,
     QItemSection,
     QItemLabel,
+    QSeparator,
+    QChip,
+    QInput,
+    QForm,
+    QSelect,
+    QCard,
+    QCardSection
   },
   directives: {
+    ClosePopup
   },
   plugins: {
   }

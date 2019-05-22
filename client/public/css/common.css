@@ -4,6 +4,7 @@ body,html{
     height: 100vh;
     width: 100vw; 
     font-family: 'Poppins', sans-serif;
+    background: #f8f9fa !important;
 }
 .centre--align{
     text-align: center;
@@ -24,6 +25,9 @@ body,html{
 .btn--pink{
     background: #f06595 !important;
 }
+.margin-top--sm{
+    margin-top:2rem !important;
+}
 .margin-top--md{
     margin-top:4rem;
 }
@@ -34,5 +38,23 @@ body,html{
     background: transparent !important;
 }
 .container{
-    padding: 1rem 3rem;
+    padding: 1rem 3rem !important;
+}
+.width--max{
+    width: 100% !important;
+}
+a {
+    text-decoration: none !important;
+    color: white !important;
+}
+.vertical--middle{
+    position: absolute !important;
+    top: 50% !important;
+    transform: translate(0,-50%) !important;
+}
+
+@media only screen and (max-width: 600px) {
+    .container{
+        padding: 1rem !important;
+    }
 }

@@ -10,9 +10,7 @@
         <div class="container">
                 <h3 class="text-h3 h3 centre--align">Today's Deal</h3>
             <div class="row">
-                <card></card>
-                <card></card>
-                <card></card>
+
             </div>
         </div>
     </div>
@@ -35,7 +33,7 @@
 </style>
 
 <script>
-import navigation from '../components/navigation/navigation';
+import navigation from '../components/navigation/landing-page-navigation/navigation';
 import card from '../components/card/card';
 export default {
     name : 'Index',

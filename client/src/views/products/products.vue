@@ -10,7 +10,12 @@
                 :key="index"
                 :id = "product.productId"
                 :image="product.uploads[0]"
-                />
+                >
+                    <q-btn flat round color="teal" icon="add_shopping_cart" />
+                    <q-btn flat round color="primary" label="View" 
+                        :to="'product/'+product.productId" 
+                    />
+                </card>
                 </template>
             </div>
         </div>
@@ -52,6 +57,15 @@ export default {
                 this.productData = result.data;
             })
             this.$router.push(`?query=${searchQuery}`);
+        }
+    },
+    watch : {
+        '$route' (to, from) {
+            let baseURI = `/api/products/${to.query.query}`;
+            this.$http.get(baseURI)
+            .then((result) => {
+                this.productData = result.data;
+            });
         }
     }
 }

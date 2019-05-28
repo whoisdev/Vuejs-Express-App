@@ -82,7 +82,7 @@ Vue.config.productionTip = false
 /**
  * Global Variables
  */
-const BASE_URL = config.base_url;
+Vue.prototype.$BASE_URL = config.base_url
 
 new Vue({
   router : router,

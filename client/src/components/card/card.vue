@@ -2,7 +2,7 @@
 <div class="col-12 col-md-4 col-sm-4 card">
    <q-card class="my-card q-mr-sm q-mb-sm">
       <!-- Image on the card -->
-      <img :src="'http://localhost:3000/'+ image">
+      <img :src="$BASE_URL + '/' + image">
       <!----------------------->
       <!-- Action on the Card -->
       <q-card-actions align="around">

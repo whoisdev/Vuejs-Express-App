@@ -17,7 +17,6 @@
                :image="product.uploads[0]"
                >
                <!-- Card component -->
-               <q-btn flat round color="teal" icon="add_shopping_cart" />
                <q-btn flat round color="primary" label="View" 
                   :to="getProductLink(product.productId)" />
                <q-btn flat round color="primary" icon="edit" 

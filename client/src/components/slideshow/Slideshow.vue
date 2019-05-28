@@ -10,7 +10,7 @@
       class="shadow-4"
     >
       <template v-for="(image, index) in images" >
-          <q-carousel-slide :key="index" :name="index" :img-src="getImage(image)" />
+          <q-carousel-slide :key="index+image" :name="index" :img-src="encodeURI($BASE_URL + '/' + image )" />
       </template>
     </q-carousel>
   </div>
@@ -34,11 +34,6 @@ export default {
     },
     props : {
         images : Array
-    },
-    methods : {
-        getImage (img) {
-            return require(`../../../../server/uploads/${img}`);
-        }
     }
 }
 </script>

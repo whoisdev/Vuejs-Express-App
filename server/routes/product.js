@@ -7,7 +7,7 @@ const mime = require('mime');
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, '.server/uploads/')
+      cb(null, './server/uploads/')
     },
     filename: function (req, file, cb) {
       crypto.pseudoRandomBytes(16, function (err, raw) {
@@ -16,7 +16,7 @@ var storage = multer.diskStorage({
     }
 });
 routes.get('/products',ProductController.fetchProducts);
-routes.get('/product/:id', ProductController.fetchAllProductsById);
+routes.get('/product/:id', ProductController.fetchProductsById);
 routes.get('/products/:search', ProductController.fetchProductsByQuery);
 
 

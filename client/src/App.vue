@@ -1,15 +1,12 @@
 <template>
-    <router-view></router-view>
+    <router-view/>
 </template>
 
 <script>
-
+/**
+ * Page to render the router-view
+ */
 export default {
-  name: 'LayoutDefault',
-  components: {
-  }
+  name: 'App'
 }
 </script>
-
-<style>
-</style>

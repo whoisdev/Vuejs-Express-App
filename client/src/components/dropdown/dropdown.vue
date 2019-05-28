@@ -1,22 +1,26 @@
 <template>
-  <div class="q-pa-md">
-    <q-btn-dropdown color="white" text-color="black" icon="menu">
+<div class="q-pa-md">
+  <!-- Dropdown -->
+   <q-btn-dropdown color="white" text-color="black" icon="menu">
+     <!-- List on the dropdown -->
       <q-list>
-        <q-item clickable v-close-popup>
-          <q-item-section>
-            <router-link tag="q-item-label" to="/product/new/add">Add Product</router-link>
-          </q-item-section>
-        </q-item>
-
-        <q-item clickable v-close-popup>
-          <q-item-section>
-            <q-item-label>Order History</q-item-label>
-          </q-item-section>
-        </q-item>
-        
+        <!-- Items on the dropdown -->
+         <q-item clickable v-close-popup>
+            <q-item-section>
+               <router-link tag="q-item-label" to="/admin/product/add">Add Product</router-link>
+            </q-item-section>
+         </q-item>
+         <q-item clickable v-close-popup>
+            <q-item-section>
+               <q-item-label>Order History</q-item-label>
+            </q-item-section>
+         </q-item>
+         <!-- Items ends on the dropdown -->
       </q-list>
-    </q-btn-dropdown>
-  </div>
+      <!-- List ends on the dropdown -->
+   </q-btn-dropdown>
+   <!-- Dropdown ends -->
+</div>
 </template>
 
 <script>

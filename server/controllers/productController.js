@@ -56,26 +56,33 @@ module.exports = {
         res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify(productsData));
     },
-    fetchAllProductsById : async function(req,res){
+    fetchProductsById : async function(req,res){
+        res.setHeader('Content-Type', 'application/json');
         let id = req.params.id;
         let result = await ProductModel.fetchProductById(id);
         result = result[0];
-        
-        let product = {}
+
+        let product = {};
         product.productId = result.productId;
         product.productTitle = result.productTitle;
         product.productPrice = result.productPrice;
         product.productDescription = result.productDescription;
         product.productSize = result.productSize;
         product.uploads = [];
-        
+        product.visible = result.isHidden == 1 ? false : true;
+        product.featured = result.isFeatured == 1 ? true: false;
+
         let uploads = await UploadsModel.fetchUploadsByProductId(id);
+        
         for(var i=0;i<uploads.length;i++){
             product.uploads.push(uploads[i].uploadPath)
         }
-        
-        res.setHeader('Content-Type', 'application/json');
-        res.end(JSON.stringify(product));
+        if(product!= undefined){
+            res.status(200).end(JSON.stringify(product))
+        }
+        else if(product.length == 0 || product == undefined){
+            res.status(204).end();
+        }
     },
     fetchProductsByQuery : async (req,res)=>{
         let searchQuery = req.params.search;

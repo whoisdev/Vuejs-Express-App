@@ -61,12 +61,34 @@ export default {
         QToggle 
     },
     props : {
-        productTitle : String,
-        productPrice : String,
-        editor : String,
-        images : Array,
-        visible : Boolean,
-        featured : Boolean
+        productTitle : {
+            type : String,
+            required : true
+        },
+        productPrice : {
+            type : String,
+            required : true
+        },
+        editor : {
+            type : String,
+            required : true
+        },
+        images : {
+            type : Array,
+            required : true
+        },
+        visible : {
+            type : Boolean,
+            required : true
+        },
+        featured : {
+            type : Boolean,
+            required : true
+        }
+    },
+    created (){
+        const vm = this.productTitle;
+        console.log(vm);
     },
     data () {
         return {

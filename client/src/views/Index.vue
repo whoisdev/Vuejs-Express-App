@@ -3,14 +3,14 @@
         <div class="row landingpage__cover text--white">
             <navigation/>
             <div class="col col-12 cover__content centre--align">
-                <h1 class="text-h2 h2">Fashion at it's best!</h1>
+                <h1 class="text-h2 h2 cover__heading">Fashion at it's best!</h1>
                 <q-btn color="purple" label="Browse" to="/products" />
             </div>
         </div>
-        <div class="container">
-                <h3 class="text-h3 h3 centre--align">Today's Deal</h3>
-            <div class="row">
-
+        <div class="container landing__deals">
+                <h3 class="text-h3 h3 centre--align deals__heading">Today's Deal</h3>
+            <div class="row deals__card">
+                <!-- @todo Add the request to get feature products -->
             </div>
         </div>
     </div>

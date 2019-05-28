@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Index from './views/Index.vue';
-import Products from './views/products/products.vue';
+import LandingPage from './views/Index.vue';
+import ProductsSearch from './views/products/Products.vue';
 import ProductDetail from './views/products/ProductDetails.vue';
 import AddProduct from './views/products/AddProduct.vue';
-import error from './views/errors/404.vue';
-
-import admin from './views/admin/index.vue';
+import Error from './views/errors/404.vue';
+import Admin from './views/admin/Index.vue';
+import EditProduct from './views/products/EditProduct.vue';
 
 Vue.use(Router)
 
@@ -15,34 +15,52 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
+      /**
+       * Home page
+       */
       path: '/',
       name: 'Home',
-      component: Index
+      component: LandingPage
     },
     {
+      /**
+       * /Product for the front-end search page
+       */
         path: '/products',
         name: 'Products',
-        component: Products
+        component: ProductsSearch,
     },
     {
+      /**
+       * Show the product details in the front-end
+       */
       path : '/product/:id',
       name : 'Product Detail',
       component : ProductDetail
     },
     {
+      /**
+       * The admin page to access products
+       */
       path : '/admin',
       name : 'Admin',
-      component : admin 
+      component : Admin 
     },
     {
-      path : '/product/new/add',
+      /**
+       * Add a new product as an admin
+       */
+      path : '/admin/product/add',
       name : 'Add Product',
       component : AddProduct 
-    },
+    },    
     {
-      path : '*',
-      name : '404 Page',
-      component : error 
+      /**
+       * Edit a product as an admin
+       */
+      path : '/admin/product/edit/:id',
+      name : 'Edit Product',
+      component : EditProduct 
     }
   ]
 })

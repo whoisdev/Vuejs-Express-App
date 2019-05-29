@@ -17,7 +17,14 @@ module.exports = {
         _.forEach(req.files, file => {
             uploads.push(file.filename);
         });
-        ProductModel.addNewProduct({productTitle, productPrice, productDescription, productSize,productFeatured,productVisible})
+        ProductModel.addNewProduct(
+            {productTitle,
+            productPrice,
+            productDescription,
+            productSize,
+            productFeatured,
+            productVisible
+        })
         .then((productId)=>{
             UploadsModel.addNewUploads(uploads,productId)
             .then(()=>{
@@ -88,7 +95,7 @@ module.exports = {
         let searchQuery = req.params.search;
         let results = await ProductModel.fetchProductsByKeywords(searchQuery);
         let productsData = [];
-        console.log(results);
+
         for(const result of results){
             let product = {}
             
@@ -108,5 +115,9 @@ module.exports = {
         }
         res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify(productsData));
+    },
+    fetchFeaturedProducts : async (req,res)=>{
+        let featuredProduct = await ProductModel.fetchFeaturedProducts()
+        console.log(featuredProduct);
     }
 }

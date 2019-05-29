@@ -40,6 +40,10 @@ export default {
     components : {
         navigation,
         card
+    },
+    mounted(){
+        let url = `${this.$BASE_URL}/api/products/featured`;
+        console.log(url);
     }
 }
 </script>

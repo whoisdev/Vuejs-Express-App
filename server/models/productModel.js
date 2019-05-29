@@ -93,5 +93,19 @@ module.exports = {
                     })
                 })
         })
+    },
+    fetchFeaturedProducts : ()=>{
+        return new Promise((resolve,reject)=>{
+            let query;
+            query = `SELECT * FROM products
+                    WHERE isFeatured = 1`;
+            connect()
+            .then((connection)=>{
+                connection.query(query,(error,results)=>{
+                    console.log(results);
+                    error ? reject(error) : reject(results);
+                })
+            })
+        });
     }
 }

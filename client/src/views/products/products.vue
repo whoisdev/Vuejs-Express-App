@@ -51,7 +51,7 @@ export default {
     },
     methods : {
         searchProducts (searchQuery) {
-            let baseURI = `/api/products/${searchQuery}`;
+            let baseURI = `/api/products/search/${searchQuery}`;
             this.$http.get(baseURI)
             .then((result) => {
                 this.productData = result.data;
@@ -61,7 +61,12 @@ export default {
     },
     watch : {
         '$route' (to, from) {
-            let baseURI = `/api/products/${to.query.query}`;
+            let baseURI;
+            if(to.query.query){
+                baseURI = `/api/products/search/${to.query.query}`;
+            } else{
+                baseURI = '/api/products/';
+            }
             this.$http.get(baseURI)
             .then((result) => {
                 this.productData = result.data;

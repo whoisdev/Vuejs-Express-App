@@ -1,11 +1,27 @@
-var ProductModel = require('../models/productModel');
-var UploadsModel = require('../models/uploadsModel');
-const chalk = require('chalk');
-import _ from 'lodash';
+/**
+ * Loads modules for Lodash and Path
+ */
+const _ = require('lodash');
+const path = require('path');
+/**
+ * Loaded Models for Product and Uploads
+ */
+const HOMEDIR  = path.join(__dirname,'..'); // Path to Homedir
+
+const ProductModel = require(path.join(HOMEDIR,'models','productModel'));
+const UploadsModel = require(path.join(HOMEDIR,'models','uploadsModel'));
 
 module.exports = {
-    addNewProduct : function (req,res){
-        const { 
+    /**
+     * Adds a new Product, Upload the image
+     * Add product in db and uploads in db as well.
+     * @param req
+     * @param res
+     * @returns null
+     */
+    addNewProduct : async (req,res) => {
+        // All the Form fields
+        const {
             productTitle, 
             productPrice, 
             productDescription, 
@@ -13,111 +29,151 @@ module.exports = {
             productFeatured,
             productVisible
         } = req.body;
-        const uploads = [];
+
+
+        const uploads = [];     // Uploaded Images
         _.forEach(req.files, file => {
             uploads.push(file.filename);
         });
-        ProductModel.addNewProduct(
-            {productTitle,
-            productPrice,
-            productDescription,
-            productSize,
-            productFeatured,
-            productVisible
-        })
-        .then((productId)=>{
-            UploadsModel.addNewUploads(uploads,productId)
-            .then(()=>{
-                res.sendStatus(200);
-            })
-            .catch((err)=>{
-                console.log(chalk.red(err));    
-            })
-        })
-        .catch((err)=>{
-            console.log(chalk.red(err));    
-        })
+
+        try{
+            // Execute the query to add product
+            let newProductId = await ProductModel.addNewProduct({
+                productTitle,
+                productTitle,
+                productPrice,
+                productDescription,
+                productSize,
+                productFeatured,
+                productVisible
+            });
+            // Execute query to add uploads
+            await UploadsModel.addNewUploads(uploads, newProductId);
+            res.sendStatus(200); // Success message
+        } catch(err){
+            res.sendStatus(500); // Error occured
+        }
     },
-    fetchProducts : async function (req,res){
-        let results = await ProductModel.fetchAllProducts();
-        let productsData = [];
+    /**
+     * Fetch All the Products
+     * @param req
+     * @param res
+     * @returns null
+     */
+    fetchProducts : async (req,res) => {
+        try {
+            let results = await ProductModel.fetchAllProducts(); // Query to fetch all products
+            let productsData = []; // All the data to be returned
         
-        for(const result of results){
-            let product = {}
+            /**
+             * Loop all the data and forms an object with 
+             * data and images to be returned
+             */
+            for (const result of results) {
+                let product = {}
+        
+                product.productId = result.productId;
+                product.productTitle = result.productTitle;
+                product.productPrice = result.productPrice;
+                product.productDescription = result.productDescription;
+                product.productSize = result.productSize;
+                product.uploads = [];
+        
+                // Fetch the uploads 
+                let uploads = await UploadsModel.fetchUploadsByProductId(result.productId);
+        
+                for (var i = 0; i < uploads.length; i++) {
+                    product.uploads.push(uploads[i].uploadPath)
+                }
+                productsData.push(product)
+            }
+        
+            res.setHeader('Content-Type', 'application/json');
+            res.status(200).end(JSON.stringify(productsData));
+        } catch (err) {
+            res.sendStatus(500);
+        }
+    },
+    /**
+     * Fetch a product by Id
+     * @param req
+     * @param res
+     * @returns null
+     */
+    fetchProductsById : async (req,res) => {
+        try{
+            let id = req.params.id;
+            let result = await ProductModel.fetchProductById(id); // Query to get product data
+            let uploads = UploadsModel.fetchUploadsByProductId(id); // Query to get the uploads
+           
+            result = result[0]; // Formatting the SQL result
             
+            let product = {};
             product.productId = result.productId;
             product.productTitle = result.productTitle;
             product.productPrice = result.productPrice;
             product.productDescription = result.productDescription;
             product.productSize = result.productSize;
             product.uploads = [];
+            product.visible = result.isHidden == 1 ? false : true;
+            product.featured = result.isFeatured == 1 ? true : false;
             
-            let uploads = await UploadsModel.fetchUploadsByProductId(result.productId);
-            
-            for(var i=0;i<uploads.length;i++){
+            // Add the uploads to the result data
+            for (var i = 0; i < uploads.length; i++) {
                 product.uploads.push(uploads[i].uploadPath)
             }
-            productsData.push(product)
-        }
-        
-        res.setHeader('Content-Type', 'application/json');
-        res.end(JSON.stringify(productsData));
-    },
-    fetchProductsById : async function(req,res){
-        res.setHeader('Content-Type', 'application/json');
-        let id = req.params.id;
-        let result = await ProductModel.fetchProductById(id);
-        result = result[0];
-
-        let product = {};
-        product.productId = result.productId;
-        product.productTitle = result.productTitle;
-        product.productPrice = result.productPrice;
-        product.productDescription = result.productDescription;
-        product.productSize = result.productSize;
-        product.uploads = [];
-        product.visible = result.isHidden == 1 ? false : true;
-        product.featured = result.isFeatured == 1 ? true: false;
-
-        let uploads = await UploadsModel.fetchUploadsByProductId(id);
-        
-        for(var i=0;i<uploads.length;i++){
-            product.uploads.push(uploads[i].uploadPath)
-        }
-        if(product!= undefined){
-            res.status(200).end(JSON.stringify(product))
-        }
-        else if(product.length == 0 || product == undefined){
-            res.status(204).end();
+            res.setHeader('Content-Type', 'application/json');
+            if (product != undefined) {
+                res.status(200).end(JSON.stringify(product)); // Product exists
+            } else if (product.length == 0 || product == undefined) {
+                res.status(204).end();  // Product doesn't exists
+            }
+        } catch(err){
+            res.sendStatus(500);
         }
     },
+    /**
+     * Fetch products based on user search
+     * @param req
+     * @param res
+     * @return null
+     */
     fetchProductsByQuery : async (req,res)=>{
-        let searchQuery = req.params.search;
-        let results = await ProductModel.fetchProductsByKeywords(searchQuery);
-        let productsData = [];
-
-        for(const result of results){
-            let product = {}
-            
-            product.productId = result.productId;
-            product.productTitle = result.productTitle;
-            product.productPrice = result.productPrice;
-            product.productDescription = result.productDescription;
-            product.productSize = result.productSize;
-            product.uploads = [];
-            
-            let uploads = await UploadsModel.fetchUploadsByProductId(result.productId);
-            
-            for(var i=0;i<uploads.length;i++){
-                product.uploads.push(uploads[i].uploadPath)
+        try {
+            let searchQuery = req.params.search;
+            let results = await ProductModel.fetchProductsByKeywords(searchQuery); // Fetch products
+            let productsData = [];
+        
+            for (const result of results) {
+                let product = {}
+        
+                product.productId = result.productId;
+                product.productTitle = result.productTitle;
+                product.productPrice = result.productPrice;
+                product.productDescription = result.productDescription;
+                product.productSize = result.productSize;
+                product.uploads = [];
+        
+                let uploads = await UploadsModel.fetchUploadsByProductId(result.productId);
+        
+                for (var i = 0; i < uploads.length; i++) {
+                    product.uploads.push(uploads[i].uploadPath)
+                }
+                productsData.push(product)
             }
-            productsData.push(product)
+
+            if(productsData){
+                res.setHeader('Content-Type', 'application/json');
+                res.status(200).end(JSON.stringify(productsData));
+            } else{
+                res.status(204).end();  // Product doesn't exists
+            }
+        } catch (err) {
+            res.sendStatus(500);
         }
-        res.setHeader('Content-Type', 'application/json');
-        res.end(JSON.stringify(productsData));
     },
     fetchFeaturedProducts : async (req,res)=>{
-        let featuredProduct = await ProductModel.fetchFeaturedProducts()
+        let featuredProduct = await ProductModel.fetchFeaturedProducts();
         console.log(featuredProduct);
     }
 }

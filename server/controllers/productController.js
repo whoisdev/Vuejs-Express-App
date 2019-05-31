@@ -8,8 +8,8 @@ const path = require('path');
  */
 const HOMEDIR  = path.join(__dirname,'..'); // Path to Homedir
 
-const ProductModel = require(path.join(HOMEDIR,'models','productModel'));
-const UploadsModel = require(path.join(HOMEDIR,'models','uploadsModel'));
+const ProductModel = require(path.join(HOMEDIR,'models','products','productModel'));
+const UploadsModel = require(path.join(HOMEDIR,'models','uploads','uploadsModel'));
 
 module.exports = {
     /**

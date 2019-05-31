@@ -1,5 +1,10 @@
-const mysql = require('mysql');
-const connect = require('../utils/connectDb');
+/**
+ * Loaded path modules
+ */
+const path = require('path');
+
+const HOMEDIR  = path.join(__dirname,'..','..');
+const connect = require(path.join(HOMEDIR,'utils','connectDb'));
 
 module.exports = {
     addNewUploads : function (files, productId){

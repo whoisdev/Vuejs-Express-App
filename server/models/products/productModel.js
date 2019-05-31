@@ -1,6 +1,7 @@
-const mysql = require('mysql');
-const connect = require('../utils/connectDb');
-const chalk = require('chalk');
+const path = require('path');
+const HOMEDIR  = path.join(__dirname,'..','..');
+const connect = require(path.join(HOMEDIR,'utils','connectDb'));
+const connection = require(path.join(HOMEDIR,'database','connection'));
 module.exports = {
     addNewProduct : function 
     (

@@ -4,11 +4,14 @@
 const express = require('express');
 const routes = express();
 const multer = require('multer');
+const path = require('path');
 
 /**
  * imported controllers
  */
-import ProductController from '../controllers/productController';
+const HOMEDIR  = path.join(__dirname,'..');
+
+const ProductController = require(path.join(HOMEDIR,'controllers','productController'));
 
 
 /**

@@ -1,7 +1,7 @@
 const path = require('path');
 const HOMEDIR  = path.join(__dirname,'..','..');
 const connect = require(path.join(HOMEDIR,'utils','connectDb'));
-const connection = require(path.join(HOMEDIR,'database','connection'));
+const query = require(path.join(HOMEDIR,'database','database'));
 module.exports = {
     addNewProduct : function 
     (

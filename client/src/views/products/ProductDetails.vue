@@ -50,7 +50,7 @@ export default {
         }
     },
     mounted() {
-        let baseURI = `/api/product/${this.$route.params.id}`
+        let baseURI = `${this.$BASE_URL}/api/product/${this.$route.params.id}`;
         this.$http.get(baseURI)
         .then((result) => {
             this.productData = result.data;

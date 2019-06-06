@@ -62,8 +62,8 @@ productController.addNewProduct = async (req,res)=>{
  */
 productController.fetchProducts = async(req,res)=>{
     try {
-        let results = await ProductModel.fetchAllProducts(); // Query to fetch all products
-        let productsData = []; // All the data to be returned
+        let results = await ProductModel.fetchAllProducts();
+        let jsonResult = [];
     
         /**
          * Loop all the data and forms an object with 
@@ -85,11 +85,11 @@ productController.fetchProducts = async(req,res)=>{
             for (var i = 0; i < uploads.length; i++) {
                 product.uploads.push(uploads[i].uploadPath)
             }
-            productsData.push(product)
+            jsonResult.push(product)
         }
     
         res.setHeader('Content-Type', 'application/json');
-        res.status(200).end(JSON.stringify(productsData));
+        res.status(200).end(JSON.stringify(jsonResult));
     } catch (err) {
         res.sendStatus(500);
     }
